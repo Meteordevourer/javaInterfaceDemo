@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webdemo.weapi.action.dao.WlVehicleMapper">
+    <insert id="insertSelective" parameterType="com.webdemo.weapi.action.domain.entity.WlVehicle">
+        insert into wl_ov_app_b_vehicle
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="vehicleId != null">
+                vehicle_id,
+            </if>
+            <if test="vehicleCode != null">
+                vehicle_code,
+            </if>
+            <if test="vehicleNick != null">
+                vehicle_nick,
+            </if>
+            <if test="enterpriseId != null">
+                enterprise_id,
+            </if>
+            <if test="operatorCode != null">
+                operator_code,
+            </if>
+            <if test="deviceCode != null">
+                device_code,
+            </if>
+            <if test="userCode != null">
+                user_code,
+            </if>
+            <if test="vehicleNumber != null">
+                vehicle_number,
+            </if>
+            <if test="vehicleNumber2 != null">
+                vehicle_number2,
+            </if>
+            <if test="plateColor != null">
+                plate_color,
+            </if>
+            <if test="vehicleImg != null">
+                vehicle_img,
+            </if>
+            <if test="brandId != null">
+                brand_id,
+            </if>
+            <if test="seriesId != null">
+                series_id,
+            </if>
+            <if test="modelId != null">
+                model_id,
+            </if>
+            <if test="modelName != null">
+                model_name,
+            </if>
+            <if test="spareTyres != null">
+                spare_tyres,
+            </if>
+            <if test="color != null">
+                color,
+            </if>
+            <if test="factoryDt != null">
+                factory_dt,
+            </if>
+            <if test="usageType != null">
+                usage_type,
+            </if>
+            <if test="vehicleClass != null">
+                vehicle_class,
+            </if>
+            <if test="vin != null">
+                vin,
+            </if>
+            <if test="discharge != null">
+                discharge,
+            </if>
+            <if test="emissionrulecode != null">
+                emissionrulecode,
+            </if>
+            <if test="buyDate != null">
+                buy_date,
+            </if>
+            <if test="fuelType != null">
+                fuel_type,
+            </if>
+            <if test="registerDate != null">
+                register_date,
+            </if>
+            <if test="manufacturer != null">
+                manufacturer,
+            </if>
+            <if test="vehicleState != null">
+                vehicle_state,
+            </if>
+            <if test="maxPerson != null">
+                max_person,
+            </if>
+            <if test="maxLoad != null">
+                max_load,
+            </if>
+            <if test="tyres != null">
+                tyres,
+            </if>
+            <if test="icp != null">
+                icp,
+            </if>
+            <if test="netWeight != null">
+                net_weight,
+            </if>
+            <if test="wheelbase != null">
+                wheelbase,
+            </if>
+            <if test="engineModel != null">
+                engine_model,
+            </if>
+            <if test="engineNo != null">
+                engine_no,
+            </if>
+            <if test="maxFuel != null">
+                max_fuel,
+            </if>
+            <if test="ratedPower != null">
+                rated_power,
+            </if>
+            <if test="mileage != null">
+                mileage,
+            </if>
+            <if test="vehiclePrice != null">
+                vehicle_price,
+            </if>
+            <if test="drivingOwner != null">
+                driving_owner,
+            </if>
+            <if test="vehicleFrom != null">
+                vehicle_from,
+            </if>
+            <if test="vehicleLicensePath != null">
+                vehicle_license_path,
+            </if>
+            <if test="nextMaintanceTime != null">
+                next_maintance_time,
+            </if>
+            <if test="nextMaintanceMileage != null">
+                next_maintance_mileage,
+            </if>
+            <if test="nextInsuranceTime != null">
+                next_insurance_time,
+            </if>
+            <if test="nextExaminTime != null">
+                next_examin_time,
+            </if>
+            <if test="isObd != null">
+                is_obd,
+            </if>
+            <if test="fullPower != null">
+                full_power,
+            </if>
+            <if test="oilDensity != null">
+                oil_density,
+            </if>
+            <if test="noticeInfo != null">
+                notice_info,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="createdTm != null">
+                created_tm,
+            </if>
+            <if test="modifiedEmpCode != null">
+                modified_emp_code,
+            </if>
+            <if test="modifiedTm != null">
+                modified_tm,
+            </if>
+            <if test="year != null">
+                year,
+            </if>
+            <if test="fortificationFlag != null">
+                fortification_flag,
+            </if>
+            <if test="score != null">
+                score,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="vehicleId != null">
+                #{vehicleId,jdbcType=BIGINT},
+            </if>
+            <if test="vehicleCode != null">
+                #{vehicleCode,jdbcType=VARCHAR},
+            </if>
+            <if test="vehicleNick != null">
+                #{vehicleNick,jdbcType=VARCHAR},
+            </if>
+            <if test="enterpriseId != null">
+                #{enterpriseId,jdbcType=INTEGER},
+            </if>
+            <if test="operatorCode != null">
+                #{operatorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceCode != null">
+                #{deviceCode,jdbcType=VARCHAR},
+            </if>
+            <if test="userCode != null">
+                #{userCode,jdbcType=VARCHAR},
+            </if>
+            <if test="vehicleNumber != null">
+                #{vehicleNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="vehicleNumber2 != null">
+                #{vehicleNumber2,jdbcType=VARCHAR},
+            </if>
+            <if test="plateColor != null">
+                #{plateColor,jdbcType=VARCHAR},
+            </if>
+            <if test="vehicleImg != null">
+                #{vehicleImg,jdbcType=VARCHAR},
+            </if>
+            <if test="brandId != null">
+                #{brandId,jdbcType=INTEGER},
+            </if>
+            <if test="seriesId != null">
+                #{seriesId,jdbcType=INTEGER},
+            </if>
+            <if test="modelId != null">
+                #{modelId,jdbcType=INTEGER},
+            </if>
+            <if test="modelName != null">
+                #{modelName,jdbcType=VARCHAR},
+            </if>
+            <if test="spareTyres != null">
+                #{spareTyres,jdbcType=INTEGER},
+            </if>
+            <if test="color != null">
+                #{color,jdbcType=VARCHAR},
+            </if>
+            <if test="factoryDt != null">
+                #{factoryDt,jdbcType=DATE},
+            </if>
+            <if test="usageType != null">
+                #{usageType,jdbcType=INTEGER},
+            </if>
+            <if test="vehicleClass != null">
+                #{vehicleClass,jdbcType=INTEGER},
+            </if>
+            <if test="vin != null">
+                #{vin,jdbcType=VARCHAR},
+            </if>
+            <if test="discharge != null">
+                #{discharge,jdbcType=DECIMAL},
+            </if>
+            <if test="emissionrulecode != null">
+                #{emissionrulecode,jdbcType=VARCHAR},
+            </if>
+            <if test="buyDate != null">
+                #{buyDate,jdbcType=DATE},
+            </if>
+            <if test="fuelType != null">
+                #{fuelType,jdbcType=INTEGER},
+            </if>
+            <if test="registerDate != null">
+                #{registerDate,jdbcType=DATE},
+            </if>
+            <if test="manufacturer != null">
+                #{manufacturer,jdbcType=VARCHAR},
+            </if>
+            <if test="vehicleState != null">
+                #{vehicleState,jdbcType=INTEGER},
+            </if>
+            <if test="maxPerson != null">
+                #{maxPerson,jdbcType=INTEGER},
+            </if>
+            <if test="maxLoad != null">
+                #{maxLoad,jdbcType=INTEGER},
+            </if>
+            <if test="tyres != null">
+                #{tyres,jdbcType=INTEGER},
+            </if>
+            <if test="icp != null">
+                #{icp,jdbcType=VARCHAR},
+            </if>
+            <if test="netWeight != null">
+                #{netWeight,jdbcType=INTEGER},
+            </if>
+            <if test="wheelbase != null">
+                #{wheelbase,jdbcType=INTEGER},
+            </if>
+            <if test="engineModel != null">
+                #{engineModel,jdbcType=VARCHAR},
+            </if>
+            <if test="engineNo != null">
+                #{engineNo,jdbcType=VARCHAR},
+            </if>
+            <if test="maxFuel != null">
+                #{maxFuel,jdbcType=DECIMAL},
+            </if>
+            <if test="ratedPower != null">
+                #{ratedPower,jdbcType=DECIMAL},
+            </if>
+            <if test="mileage != null">
+                #{mileage,jdbcType=DECIMAL},
+            </if>
+            <if test="vehiclePrice != null">
+                #{vehiclePrice,jdbcType=DECIMAL},
+            </if>
+            <if test="drivingOwner != null">
+                #{drivingOwner,jdbcType=VARCHAR},
+            </if>
+            <if test="vehicleFrom != null">
+                #{vehicleFrom,jdbcType=INTEGER},
+            </if>
+            <if test="vehicleLicensePath != null">
+                #{vehicleLicensePath,jdbcType=VARCHAR},
+            </if>
+            <if test="nextMaintanceTime != null">
+                #{nextMaintanceTime,jdbcType=DATE},
+            </if>
+            <if test="nextMaintanceMileage != null">
+                #{nextMaintanceMileage,jdbcType=DECIMAL},
+            </if>
+            <if test="nextInsuranceTime != null">
+                #{nextInsuranceTime,jdbcType=DATE},
+            </if>
+            <if test="nextExaminTime != null">
+                #{nextExaminTime,jdbcType=DATE},
+            </if>
+            <if test="isObd != null">
+                #{isObd,jdbcType=INTEGER},
+            </if>
+            <if test="fullPower != null">
+                #{fullPower,jdbcType=DECIMAL},
+            </if>
+            <if test="oilDensity != null">
+                #{oilDensity,jdbcType=DECIMAL},
+            </if>
+            <if test="noticeInfo != null">
+                #{noticeInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createdTm != null">
+                #{createdTm,jdbcType=TIMESTAMP},
+            </if>
+            <if test="modifiedEmpCode != null">
+                #{modifiedEmpCode,jdbcType=VARCHAR},
+            </if>
+            <if test="modifiedTm != null">
+                #{modifiedTm,jdbcType=TIMESTAMP},
+            </if>
+            <if test="year != null">
+                #{year,jdbcType=INTEGER},
+            </if>
+            <if test="fortificationFlag != null">
+                #{fortificationFlag,jdbcType=INTEGER},
+            </if>
+            <if test="score != null">
+                #{score,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+</mapper>

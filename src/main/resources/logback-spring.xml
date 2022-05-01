@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<substitutionProperty name="max.size" value="100MB" />
+	<contextName>webdemo-weapi</contextName>
+
+	<!--模块名,重要,必须唯一-->
+	<property name="module.name" value="weapi" />
+	<!--日志输出路径-->
+	<property name="log.path" value="/mnt/logs/webdemo-weapi/${module.name}" />
+
+	<jmxConfigurator />
+	
+	<logger name="com.webdemo.weapi.action.dao" level="DEBUG" />
+
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level context:[${module.name}] [%thread] %logger{56}.%method\(\):%L - %msg%n</pattern>
+		</layout>
+	</appender>
+
+	<appender name="file.all" class="ch.qos.logback.core.rolling.RollingFileAppender"><!-- All Log Info -->
+		<File>${log.path}/${module.name}.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${log.path}/${module.name}_all_%d{yyyy-MM-dd}.%i.log.gz</FileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>${max.size}</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{56}.%method\(\): - %msg%n</pattern>
+		</layout>
+	</appender>
+
+	<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+	<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+	<!-- 添加附加的appender,最多只能添加一个 -->
+	<appender name="file.async" class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>256</queueSize>
+		<includeCallerData>true</includeCallerData>
+		<appender-ref ref="file.all" />
+	</appender>
+
+	<appender name="file.error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${log.path}/${module.name}_err.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${log.path}/${module.name}_err_%d{yyyy-MM-dd}.%i.log.gz</FileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>${max.size}</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{56}.%method\(\): - %msg%n</pattern>
+		</layout>
+
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<appender name="file.info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>${log.path}/${module.name}_info.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${log.path}/${module.name}_info_%d{yyyy-MM-dd}.%i.log.gz</FileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>${max.size}</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{56}.%method\(\): - %msg%n</pattern>
+		</layout>
+
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+	</appender>
+	
+	
+	<appender name="ml.data" class="ch.qos.logback.core.rolling.RollingFileAppender"><!-- 马来平台的数据 -->
+		<File>${log.path}/data/${module.name}_data.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${log.path}/data/${module.name}_data_%d{yyyy-MM-dd}.%i.log.gz</FileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>${max.size}</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{56}.%method\(\): - %msg%n</pattern>
+		</layout>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>WARN</level>
+		</filter>
+		
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>WARN</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		
+	</appender>
+	
+	
+	<springProfile name="dev">
+		<root level="info"><!--debug info -->
+			<appender-ref ref="stdout" />
+ 			<appender-ref ref="file.async" />
+			<appender-ref ref="file.error" />
+			<appender-ref ref="file.info" />
+		</root>
+	</springProfile>
+
+	<springProfile name="test,aliyun, sg, cn, fz,zj">
+		<root level="info">
+		    <appender-ref ref="stdout" />
+			<appender-ref ref="file.async" />
+			<appender-ref ref="file.error" />
+			<appender-ref ref="file.info" />
+		</root>
+	</springProfile>
+
+
+	
+
+
+	<!-- 以下日志打印输出请自行关闭开户，但上线请统一处理 -->
+	<!-- <logger name="org.springframework" additivity="false"> -->
+	<!-- <level value="debug" /> -->
+	<!-- <appender-ref ref="file.async" /> -->
+	<!-- <appender-ref ref="file.error" /> -->
+	<!-- </logger> -->
+</configuration>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webdemo.weapi.action.dao.DeviceMapper">
+    <resultMap id="BaseResultMap"
+               type="com.webdemo.weapi.action.domain.WlDevice">
+        <id column="device_id" jdbcType="BIGINT" property="deviceId" />
+        <result column="device_code" jdbcType="VARCHAR"
+                property="deviceCode" />
+        <result column="enterprise_id" jdbcType="INTEGER"
+                property="enterpriseId" />
+        <result column="operator_code" jdbcType="VARCHAR"
+                property="operatorCode" />
+        <result column="user_code" jdbcType="VARCHAR"
+                property="userCode" />
+        <result column="vehicle_code" jdbcType="VARCHAR"
+                property="vehicleCode" />
+        <result column="factory_date" jdbcType="DATE"
+                property="factoryDate" />
+        <result column="install_date" jdbcType="DATE"
+                property="installDate" />
+        <result column="assets_coding" jdbcType="VARCHAR"
+                property="assetsCoding" />
+        <result column="assets_barcode" jdbcType="VARCHAR"
+                property="assetsBarcode" />
+        <result column="sim_operator" jdbcType="VARCHAR"
+                property="simOperator" />
+        <result column="sim_code" jdbcType="VARCHAR" property="simCode" />
+        <result column="sim_validdate" jdbcType="TIMESTAMP"
+                property="simValiddate" />
+        <result column="serial_code" jdbcType="VARCHAR"
+                property="serialCode" />
+        <result column="device_model" jdbcType="VARCHAR"
+                property="deviceModel" />
+        <result column="device_type" jdbcType="INTEGER"
+                property="deviceType" />
+        <result column="bindstatus" jdbcType="INTEGER"
+                property="bindstatus" />
+        <result column="mac_active_time" jdbcType="TIMESTAMP"
+                property="macActiveTime" />
+        <result column="version" jdbcType="VARCHAR" property="version" />
+        <result column="imsi" jdbcType="VARCHAR" property="imsi" />
+        <result column="valid_state" jdbcType="INTEGER"
+                property="validState" />
+        <result column="user_belongs" jdbcType="VARCHAR"
+                property="userBelongs" />
+        <result column="iccid" jdbcType="VARCHAR" property="iccid" />
+        <result column="fuel_correct" jdbcType="DECIMAL"
+                property="fuelCorrect" />
+        <result column="adaptation_status" jdbcType="INTEGER"
+                property="adaptationStatus" />
+        <result column="des_key" jdbcType="VARCHAR" property="desKey" />
+        <result column="create_date" jdbcType="TIMESTAMP"
+                property="createDate" />
+        <result column="update_date" jdbcType="TIMESTAMP"
+                property="updateDate" />
+        <result column="ssid" jdbcType="VARCHAR" property="ssid" />
+        <result column="password" jdbcType="VARCHAR"
+                property="password" />
+        <result column="binding_time" jdbcType="TIMESTAMP"
+                property="bindingTime" />
+        <result column="software_version" jdbcType="VARCHAR"
+                property="softwareVersion" />
+        <result column="hardware_version" jdbcType="VARCHAR"
+                property="hardwareVersion" />
+        <result column="manufacturer" jdbcType="VARCHAR"
+                property="manufacturer" />
+        <result column="login_status" jdbcType="INTEGER"
+                property="loginStatus" />
+        <result column="modem_software" jdbcType="VARCHAR"
+                property="modemSoftware" />
+        <result column="modem_hardware" jdbcType="VARCHAR"
+                property="modemHardware" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		device_id, device_code, enterprise_id, operator_code,
+		user_code, vehicle_code,
+		factory_date,
+		install_date, assets_coding,
+		assets_barcode, sim_operator, sim_code, sim_validdate,
+		serial_code,
+		device_model, device_type, bindstatus, mac_active_time,
+		version, imsi,
+		valid_state, user_belongs, iccid, fuel_correct, adaptation_status,
+		des_key,
+		create_date,
+		update_date, ssid, password, binding_time,
+		software_version, hardware_version,
+		manufacturer,
+		login_status,
+		modem_software, modem_hardware
+	</sql>
+
+
+    <select id="selectDeviceIsExists" parameterType="map" resultMap="BaseResultMap">
+
+        SELECT
+
+        <include refid="Base_Column_List" />
+
+        FROM wl_b_device
+
+        WHERE
+
+        operator_code = #{operatorCode}
+
+        AND device_code = #{deviceId}
+
+        AND (valid_state = 1 OR valid_state = 2)
+
+    </select>
+</mapper>

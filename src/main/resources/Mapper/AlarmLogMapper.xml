@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webdemo.weapi.action.dao.AlarmLogMapper">
+    <select id="selectAlarmByPage" parameterType="java.util.Map" resultType="com.webdemo.weapi.action.domain.AlarmLog">
+
+        SELECT
+        a.vehicle_number AS vehicleNumber,
+        a.device_code AS deviceCode,
+        vs.online_state AS onlineState,
+        vs.acc AS acc,
+        a.alarm_id AS alarmId,
+        ate.alarm_name AS alarmName,
+        a.alarm_time AS alarmTime,
+        a.machine_time AS machineTime,
+        a.start_longitude AS startLongitude,
+        a.start_latitude AS startLatitude,
+        a.end_longitude AS endLongitude,
+        a.end_latitude AS endLatitude,
+        a.start_location AS startLocation,
+        a.end_location AS endLocation,
+        a.score_buckle_info AS scoreBuckleInfo,
+        a.speed_before AS speedBefore,
+        a.speed_after AS speedAfter,
+        a.speed_value AS speedValue,
+        a.alarm_distance AS alarmDistance,
+        a.reserved1 AS reserved1,
+        a.reserved2 AS reserved2,
+        a.reserved3 AS reserved3
+
+        FROM wl_p_alarm_log a
+        INNER JOIN wl_ov_app_t_vehicle_state vs ON vs.device_code = a.device_code
+        INNER JOIN wl_b_alarm_type ate ON ate.alarm_id = a.alarm_id
+
+        <where>
+
+            <if test="item != null and item.size() > 0">
+
+                AND a.vehicle_number in (
+                <foreach collection="item" item="item" index="index"
+                         separator=",">
+                    #{item,	jdbcType=VARCHAR}
+                </foreach>
+                )
+            </if>
+
+            <if test="operatorCode !=null and operatorCode != ''">
+                AND a.operator_code LIKE CONCAT(#{operatorCode},'%')
+            </if>
+
+            <if test="dataType !=null and dataType != ''">
+                AND ate.alarm_class = #{dataType, jdbcType=INTEGER}
+            </if>
+
+        </where>
+
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+
+        <if
+                test="orderBy != null and orderBy != '' and descOrAsc != null and descOrAsc != ''">
+
+            <if test="descOrAsc == 'ASC' ">
+                ASC
+            </if>
+
+            <if test="descOrAsc == 'DESC' ">
+                DESC
+            </if>
+
+        </if>
+
+        LIMIT #{startRow} , #{endRow}
+
+    </select>
+
+    <select id="selectAlarmByPageCount" parameterType="map" resultType="java.lang.Long">
+
+        SELECT
+        COUNT(*)
+
+        FROM wl_p_alarm_log a
+        INNER JOIN wl_ov_app_t_vehicle_state vs ON vs.device_code = a.device_code
+        INNER JOIN wl_b_alarm_type ate ON ate.alarm_id = a.alarm_id
+
+        <where>
+
+            <if test="item != null and item.size() > 0">
+
+                AND a.vehicle_number in (
+                <foreach collection="item" item="item" index="index"
+                         separator=",">
+                    #{item,	jdbcType=VARCHAR}
+                </foreach>
+                )
+            </if>
+
+            <if test="operatorCode !=null and operatorCode != ''">
+                AND a.operator_code LIKE CONCAT(#{operatorCode},'%')
+            </if>
+
+            <if test="dataType !=null and dataType != ''">
+                AND ate.alarm_class = #{dataType, jdbcType=INTEGER}
+            </if>
+
+        </where>
+
+    </select>
+</mapper>
+

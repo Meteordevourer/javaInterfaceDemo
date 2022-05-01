@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webdemo.weapi.action.dao.VehicleStateMapper">
+    <resultMap id="BaseResultMap" type="com.webdemo.weapi.action.domain.entity.VehicleStateEntity">
+        <id column="device_code" jdbcType="VARCHAR" property="deviceCode" />
+        <result column="vehicle_code" jdbcType="VARCHAR" property="vehicleCode" />
+        <result column="user_code" jdbcType="VARCHAR" property="userCode" />
+        <result column="operator_code" jdbcType="VARCHAR" property="operatorCode" />
+        <result column="enterprise_id" jdbcType="INTEGER" property="enterpriseId" />
+        <result column="acc" jdbcType="INTEGER" property="acc" />
+        <result column="attend_state" jdbcType="INTEGER" property="attendState" />
+        <result column="online_state" jdbcType="INTEGER" property="onlineState" />
+        <result column="driving_state" jdbcType="INTEGER" property="drivingState" />
+        <result column="operating_state" jdbcType="INTEGER" property="operatingState" />
+        <result column="operating_des" jdbcType="VARCHAR" property="operatingDes" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="device_wake_up_time" jdbcType="TIMESTAMP" property="deviceWakeUpTime" />
+
+    </resultMap>
+    <sql id="Base_Column_List">
+    device_code, vehicle_code, user_code, operator_code, enterprise_id, acc, attend_state,
+    online_state, driving_state, operating_state, operating_des, update_time, device_wake_up_time
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from wl_ov_app_t_vehicle_state
+        where device_code = #{deviceCode,jdbcType=VARCHAR}
+    </select>
+    <insert id="insertSelective" parameterType="com.webdemo.weapi.action.domain.entity.VehicleStateEntity">
+        insert into wl_ov_app_t_vehicle_state
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deviceCode != null">
+                device_code,
+            </if>
+            <if test="vehicleCode != null">
+                vehicle_code,
+            </if>
+            <if test="userCode != null">
+                user_code,
+            </if>
+            <if test="operatorCode != null">
+                operator_code,
+            </if>
+            <if test="enterpriseId != null">
+                enterprise_id,
+            </if>
+            <if test="acc != null">
+                acc,
+            </if>
+            <if test="attendState != null">
+                attend_state,
+            </if>
+            <if test="onlineState != null">
+                online_state,
+            </if>
+            <if test="drivingState != null">
+                driving_state,
+            </if>
+            <if test="operatingState != null">
+                operating_state,
+            </if>
+            <if test="operatingDes != null">
+                operating_des,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="deviceWakeUpTime != null">
+                device_wake_up_time,
+            </if>
+
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deviceCode != null">
+                #{deviceCode,jdbcType=VARCHAR},
+            </if>
+            <if test="vehicleCode != null">
+                #{vehicleCode,jdbcType=VARCHAR},
+            </if>
+            <if test="userCode != null">
+                #{userCode,jdbcType=VARCHAR},
+            </if>
+            <if test="operatorCode != null">
+                #{operatorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="enterpriseId != null">
+                #{enterpriseId,jdbcType=INTEGER},
+            </if>
+            <if test="acc != null">
+                #{acc,jdbcType=INTEGER},
+            </if>
+            <if test="attendState != null">
+                #{attendState,jdbcType=INTEGER},
+            </if>
+            <if test="onlineState != null">
+                #{onlineState,jdbcType=INTEGER},
+            </if>
+            <if test="drivingState != null">
+                #{drivingState,jdbcType=INTEGER},
+            </if>
+            <if test="operatingState != null">
+                #{operatingState,jdbcType=INTEGER},
+            </if>
+            <if test="operatingDes != null">
+                #{operatingDes,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deviceWakeUpTime != null">
+                #{deviceWakeUpTime,jdbcType=TIMESTAMP},
+            </if>
+
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.webdemo.weapi.action.domain.entity.VehicleStateEntity">
+        update wl_ov_app_t_vehicle_state
+        <set>
+            <if test="vehicleCode != null">
+                vehicle_code = #{vehicleCode,jdbcType=VARCHAR},
+            </if>
+            <if test="userCode != null">
+                user_code = #{userCode,jdbcType=VARCHAR},
+            </if>
+            <if test="operatorCode != null">
+                operator_code = #{operatorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="enterpriseId != null">
+                enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+            </if>
+            <if test="acc != null">
+                acc = #{acc,jdbcType=INTEGER},
+            </if>
+            <if test="attendState != null">
+                attend_state = #{attendState,jdbcType=INTEGER},
+            </if>
+            <if test="onlineState != null">
+                online_state = #{onlineState,jdbcType=INTEGER},
+            </if>
+            <if test="drivingState != null">
+                driving_state = #{drivingState,jdbcType=INTEGER},
+            </if>
+            <if test="operatingState != null">
+                operating_state = #{operatingState,jdbcType=INTEGER},
+            </if>
+            <if test="operatingDes != null">
+                operating_des = #{operatingDes,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deviceWakeUpTime != null">
+                device_wake_up_time = #{deviceWakeUpTime,jdbcType=TIMESTAMP},
+            </if>
+
+        </set>
+        where device_code = #{deviceCode,jdbcType=VARCHAR}
+    </update>
+</mapper>
+

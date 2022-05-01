@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webdemo.weapi.action.dao.TravelMapper">
+
+    <update id="updateTravelMax"
+            parameterType="com.webdemo.weapi.action.domain.WlVehicleTravel">
+        update wl_ov_app_t_vehicle_travel
+
+        set
+
+            max_speed = #{maxSpeed,jdbcType=DECIMAL},
+            max_rpm = #{maxRpm,jdbcType=DECIMAL}
+        where
+
+            travel_code = #{travelCode,jdbcType=VARCHAR}
+    </update>
+
+    <select id="selectVehicleTravelList" parameterType="map"
+            resultType="com.webdemo.weapi.action.domain.show.app.VehicleTravelShow">
+
+        SELECT
+
+        v.vehicle_number AS plateNumber,
+        vtr.device_code AS deviceId,
+        vs.online_state AS onlineState,
+        vs.acc AS acc,
+        vtr.travel_code AS travelCode,
+        vtr.travle_start_time AS travelStartTime,
+        vtr.travle_end_time AS travelEndTime,
+        vtr.travle_is_end AS travleIsEnd
+
+        FROM wl_ov_app_t_vehicle_travel_real vtr
+
+        INNER JOIN wl_ov_app_b_vehicle v ON v.device_code = vtr.device_code
+        INNER JOIN wl_ov_app_t_vehicle_state vs ON vs.device_code = vtr.device_code
+
+        WHERE
+
+        v.operator_code LIKE CONCAT(#{operatorCode},'%')
+
+
+        <if test="item != null and item.size() > 0">
+            AND v.vehicle_number in (
+            <foreach collection="item" item="item" index="index"
+                     separator=",">
+                #{item,jdbcType=VARCHAR}
+            </foreach>
+            )
+        </if>
+
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+
+        <if
+                test="orderBy != null and orderBy != '' and descOrAsc != null and descOrAsc != ''">
+
+            <if test="descOrAsc == 'ASC' ">
+                ASC
+            </if>
+
+            <if test="descOrAsc == 'DESC' ">
+                DESC
+            </if>
+
+        </if>
+
+    </select>
+
+
+    <select id="selectVehicleTravelInfoListCount"
+            parameterType="map" resultType="java.lang.Long">
+        select
+
+        COUNT(*)
+
+        from wl_ov_app_t_vehicle_travel t
+
+        WHERE
+
+        t.operator_code LIKE CONCAT(#{operatorCode},'%')
+
+        AND t.end_time is not  null
+
+        <if
+                test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+
+            <![CDATA[ and t.end_time >= #{startTime,jdbcType=TIMESTAMP} and t.end_time <= #{endTime,jdbcType=TIMESTAMP} ]]>
+
+        </if>
+
+        <if test="item != null and item.size() > 0">
+            AND t.vehicle_number in (
+            <foreach collection="item" item="item" index="index"
+                     separator=",">
+                #{item,jdbcType=VARCHAR}
+            </foreach>
+            )
+        </if>
+
+    </select>
+
+
+    <select id="selectVehicleTravelInfoList" parameterType="map" resultType="com.webdemo.weapi.action.domain.WlVehicleTravel">
+
+        SELECT
+
+        t.travel_id AS travelId,
+        t.travel_code AS travelCode,
+        t.device_code AS deviceCode,
+        t.vehicle_number AS vehicleNumber,
+        t.start_time AS startTime,
+        t.end_time AS endTime,
+        t.start_longitude AS startLongitude,
+        t.start_latitude AS startLatitude,
+        t.end_longitude AS endLongitude,
+        t.end_latitude AS endLatitude,
+        t.start_address AS startAddress,
+        t.end_address AS endAddress,
+        t.mileage AS mileage,
+        t.fuel AS fuel,
+        t.lazy_speed_fuel AS lazySpeedFuel,
+        t.driving_avg_fuel AS drivingAvgFuel,
+        t.avg_fuel AS avgFuel,
+        t.driver_time AS driverTime,
+        t.avg_speed AS avgSpeed,
+        t.overspeed_times AS overspeedTimes,
+        t.overspeed_distance AS overspeedDistance,
+        t.overspeed_duration AS overspeedDuration,
+        t.accelerate_times AS accelerateTimes,
+        t.decelerate_times AS decelerateTimes,
+        t.sharp_turn_times AS sharpTurnTimes,
+        t.fatigue_times AS fatigueTimes,
+        t.fatigue_duration AS fatigueDuration,
+        t.lazy_speed_times AS lazySpeedTimes,
+        t.lazy_speed_duration AS lazySpeedDuration,
+        t.neutral_times AS neutralTimes,
+        vs.online_state AS onlineState,
+        vs.acc AS acc,
+        t.max_speed AS maxSpeed,
+        t.max_rpm AS maxRpm
+
+        FROM wl_ov_app_t_vehicle_travel t
+        INNER JOIN wl_ov_app_t_vehicle_state vs ON vs.device_code = t.device_code
+
+        WHERE
+
+        t.operator_code LIKE CONCAT(#{operatorCode},'%')
+
+        AND t.end_time is not  null
+
+        <if
+                test="startTime != null and startTime != '' and endTime != null and endTime != ''">
+
+            <![CDATA[ and t.end_time >= #{startTime,jdbcType=TIMESTAMP} and t.end_time <= #{endTime,jdbcType=TIMESTAMP} ]]>
+
+        </if>
+
+        <if test="item != null and item.size() > 0">
+            AND t.vehicle_number in (
+            <foreach collection="item" item="item" index="index"
+                     separator=",">
+                #{item,jdbcType=VARCHAR}
+            </foreach>
+            )
+        </if>
+
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+
+        <if
+                test="orderBy != null and orderBy != '' and descOrAsc != null and descOrAsc != ''">
+
+            <if test="descOrAsc == 'ASC' ">
+                ASC
+            </if>
+
+            <if test="descOrAsc == 'DESC' ">
+                DESC
+            </if>
+
+        </if>
+
+        LIMIT #{startRow} , #{endRow}
+    </select>
+
+
+
+    <select id="selectVehicleTravelNowDateListCount"
+            parameterType="map" resultType="java.lang.Long">
+
+        SELECT COUNT(DISTINCT device_code ) AS num
+
+        FROM wl_ov_app_t_vehicle_travel
+
+        WHERE
+
+        operator_code LIKE CONCAT(#{operatorCode},'%')
+
+        <if test="item != null and item.size() > 0">
+            AND vehicle_number in (
+            <foreach collection="item" item="item" index="index"
+                     separator=",">
+                #{item,jdbcType=VARCHAR}
+            </foreach>
+            )
+        </if>
+
+        AND date_format(end_time, '%Y-%m-%d') = #{nowDate}
+
+    </select>
+
+
+    <select id="selectVehicleTravelNowDateList" parameterType="map" resultType="com.webdemo.weapi.action.domain.show.app.VehicleTravelNowDateShow">
+
+        SELECT
+
+        device_code AS deviceId,
+        vehicle_number AS plateNumber,
+        SUM(mileage) AS mileage,
+        SUM(fuel) AS fuel,
+        SUM(driver_time*3600) AS driverTime,
+        SUM(mileage) / SUM(driver_time) AS avgSpeed
+
+
+        FROM wl_ov_app_t_vehicle_travel
+
+
+        WHERE
+
+        operator_code LIKE CONCAT(#{operatorCode},'%')
+
+        <if test="item != null and item.size() > 0">
+            AND vehicle_number in (
+            <foreach collection="item" item="item" index="index"
+                     separator=",">
+                #{item,jdbcType=VARCHAR}
+            </foreach>
+            )
+        </if>
+
+        AND date_format(end_time, '%Y-%m-%d') = #{nowDate}
+
+        GROUP BY device_code
+
+        LIMIT #{startRow} , #{endRow}
+    </select>
+    <select id="selectVehicleTravelListByDateCount"
+            parameterType="map" resultType="java.lang.Long">
+        select
+
+        COUNT(*)
+
+        from wl_ov_app_t_vehicle_travel t
+
+        WHERE
+
+        t.operator_code LIKE CONCAT(#{operatorCode},'%')
+
+        AND date_format(end_time, '%Y-%m-%d') = #{thisDate}
+
+        <if test="item != null and item.size() > 0">
+            AND t.vehicle_number in (
+            <foreach collection="item" item="item" index="index"
+                     separator=",">
+                #{item,jdbcType=VARCHAR}
+            </foreach>
+            )
+        </if>
+
+    </select>
+
+    <select id="selectVehicleTravelListByDate" parameterType="map" resultType="com.webdemo.weapi.action.domain.WlVehicleTravel">
+
+        SELECT
+
+        t.travel_id AS travelId,
+        t.travel_code AS travelCode,
+        t.device_code AS deviceCode,
+        t.vehicle_number AS vehicleNumber,
+        t.start_time AS startTime,
+        t.end_time AS endTime,
+        t.start_longitude AS startLongitude,
+        t.start_latitude AS startLatitude,
+        t.end_longitude AS endLongitude,
+        t.end_latitude AS endLatitude,
+        t.start_address AS startAddress,
+        t.end_address AS endAddress,
+        t.mileage AS mileage,
+        t.fuel AS fuel,
+        t.lazy_speed_fuel AS lazySpeedFuel,
+        t.driving_avg_fuel AS drivingAvgFuel,
+        t.avg_fuel AS avgFuel,
+        t.driver_time AS driverTime,
+        t.avg_speed AS avgSpeed,
+        t.overspeed_times AS overspeedTimes,
+        t.overspeed_distance AS overspeedDistance,
+        t.overspeed_duration AS overspeedDuration,
+        t.accelerate_times AS accelerateTimes,
+        t.decelerate_times AS decelerateTimes,
+        t.sharp_turn_times AS sharpTurnTimes,
+        t.fatigue_times AS fatigueTimes,
+        t.fatigue_duration AS fatigueDuration,
+        t.lazy_speed_times AS lazySpeedTimes,
+        t.lazy_speed_duration AS lazySpeedDuration,
+        t.neutral_times AS neutralTimes,
+        vs.online_state AS onlineState,
+        vs.acc AS acc,
+        t.max_speed AS maxSpeed,
+        t.max_rpm AS maxRpm
+
+        FROM wl_ov_app_t_vehicle_travel t
+        INNER JOIN wl_ov_app_t_vehicle_state vs ON vs.device_code = t.device_code
+
+        WHERE
+
+        t.operator_code LIKE CONCAT(#{operatorCode},'%')
+
+        AND date_format(end_time, '%Y-%m-%d') = #{thisDate}
+
+        <if test="item != null and item.size() > 0">
+            AND t.vehicle_number in (
+            <foreach collection="item" item="item" index="index"
+                     separator=",">
+                #{item,jdbcType=VARCHAR}
+            </foreach>
+            )
+        </if>
+
+        <if test="orderBy != null and orderBy != ''">
+            ORDER BY ${orderBy}
+        </if>
+
+        <if
+                test="orderBy != null and orderBy != '' and descOrAsc != null and descOrAsc != ''">
+
+            <if test="descOrAsc == 'ASC' ">
+                ASC
+            </if>
+
+            <if test="descOrAsc == 'DESC' ">
+                DESC
+            </if>
+
+        </if>
+
+        LIMIT #{startRow} , #{endRow}
+    </select>
+
+    <!-- 获取单个行程 -->
+    <select id="selectByTravelId" parameterType="java.util.Map" resultType="com.webdemo.weapi.action.domain.WlVehicleTravel">
+
+		SELECT
+
+			t.travel_id AS travelId,
+			t.travel_code AS travelCode,
+			t.device_code AS deviceCode,
+			t.vehicle_number AS vehicleNumber,
+			t.start_time AS startTime,
+			t.end_time AS endTime,
+			vs.online_state AS onlineState,
+			vs.acc AS acc
+
+		FROM wl_ov_app_t_vehicle_travel t
+		INNER JOIN wl_ov_app_t_vehicle_state vs ON vs.device_code = t.device_code
+
+		WHERE
+
+			t.travel_id = #{travelId,jdbcType=INTEGER}
+
+		AND t.operator_code LIKE CONCAT(#{operatorCode},'%')
+
+	</select>
+</mapper>

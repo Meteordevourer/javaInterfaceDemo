@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webdemo.weapi.action.dao.EmployeeMapper">
+    <resultMap id="BaseResultMap" type="com.webdemo.weapi.action.domain.Employee">
+        <id column="emp_id" jdbcType="INTEGER" property="empId" />
+        <result column="operator_code" jdbcType="VARCHAR" property="operatorCode" />
+        <result column="enterprise_id" jdbcType="INTEGER" property="enterpriseId" />
+        <result column="user_name" jdbcType="VARCHAR" property="userName" />
+        <result column="account" jdbcType="VARCHAR" property="account" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="pwd" jdbcType="VARCHAR" property="pwd" />
+        <result column="email" jdbcType="VARCHAR" property="email" />
+        <result column="position" jdbcType="VARCHAR" property="position" />
+        <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+        <result column="last_login_ip" jdbcType="VARCHAR" property="lastLoginIp" />
+        <result column="emp_state" jdbcType="INTEGER" property="empState" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="language_id" jdbcType="INTEGER" property="languageId" />
+        <result column="basit_id" jdbcType="INTEGER" property="basitId" />
+        <result column="fuel_unit" jdbcType="VARCHAR" property="fuelUnit" />
+        <result column="speed_unit" jdbcType="VARCHAR" property="speedUnit" />
+        <result column="long_unit" jdbcType="VARCHAR" property="longUnit" />
+        <result column="map_type" jdbcType="INTEGER" property="mapType" />
+        <result column="token" jdbcType="VARCHAR" property="token" />
+        <result column="token_create_time" jdbcType="TIMESTAMP" property="tokenCreateTime" />
+        <result column="token_validity_time" jdbcType="TIMESTAMP" property="tokenValidityTime" />
+    </resultMap>
+    <sql id="Base_Column_List">
+    emp_id, operator_code, enterprise_id, user_name, account, phone, pwd, email, position,
+    last_login_time, last_login_ip, emp_state, create_time, update_time, language_id,
+    basit_id, fuel_unit, speed_unit, long_unit, map_type, token, token_create_time, token_validity_time
+  </sql>
+
+    <select id="selectByPrimaryKey" parameterType="string" resultMap="BaseResultMap">
+
+        select
+        <include refid="Base_Column_List" />
+        from wl_p_employee
+        where account = #{account,jdbcType=VARCHAR}
+
+        and emp_state = 1
+
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from wl_p_employee
+    where emp_id = #{empId,jdbcType=INTEGER}
+  </delete>
+    <insert id="insert" parameterType="com.webdemo.weapi.action.domain.Employee">
+    insert into wl_p_employee (emp_id, operator_code, enterprise_id,
+      user_name, account, phone,
+      pwd, email, position,
+      last_login_time, last_login_ip, emp_state,
+      create_time, update_time, language_id,
+      basit_id, fuel_unit, speed_unit,
+      long_unit, map_type, token,
+      token_create_time, token_validity_time)
+    values (#{empId,jdbcType=INTEGER}, #{operatorCode,jdbcType=VARCHAR}, #{enterpriseId,jdbcType=INTEGER},
+      #{userName,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+      #{pwd,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR},
+      #{lastLoginTime,jdbcType=TIMESTAMP}, #{lastLoginIp,jdbcType=VARCHAR}, #{empState,jdbcType=INTEGER},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{languageId,jdbcType=INTEGER},
+      #{basitId,jdbcType=INTEGER}, #{fuelUnit,jdbcType=VARCHAR}, #{speedUnit,jdbcType=VARCHAR},
+      #{longUnit,jdbcType=VARCHAR}, #{mapType,jdbcType=INTEGER}, #{token,jdbcType=VARCHAR},
+      #{tokenCreateTime,jdbcType=TIMESTAMP}, #{tokenValidityTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.webdemo.weapi.action.domain.Employee">
+        insert into wl_p_employee
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="empId != null">
+                emp_id,
+            </if>
+            <if test="operatorCode != null">
+                operator_code,
+            </if>
+            <if test="enterpriseId != null">
+                enterprise_id,
+            </if>
+            <if test="userName != null">
+                user_name,
+            </if>
+            <if test="account != null">
+                account,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="pwd != null">
+                pwd,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="position != null">
+                position,
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time,
+            </if>
+            <if test="lastLoginIp != null">
+                last_login_ip,
+            </if>
+            <if test="empState != null">
+                emp_state,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="languageId != null">
+                language_id,
+            </if>
+            <if test="basitId != null">
+                basit_id,
+            </if>
+            <if test="fuelUnit != null">
+                fuel_unit,
+            </if>
+            <if test="speedUnit != null">
+                speed_unit,
+            </if>
+            <if test="longUnit != null">
+                long_unit,
+            </if>
+            <if test="mapType != null">
+                map_type,
+            </if>
+            <if test="token != null">
+                token,
+            </if>
+            <if test="tokenCreateTime != null">
+                token_create_time,
+            </if>
+            <if test="tokenValidityTime != null">
+                token_validity_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="empId != null">
+                #{empId,jdbcType=INTEGER},
+            </if>
+            <if test="operatorCode != null">
+                #{operatorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="enterpriseId != null">
+                #{enterpriseId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="account != null">
+                #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="pwd != null">
+                #{pwd,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLoginTime != null">
+                #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastLoginIp != null">
+                #{lastLoginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="empState != null">
+                #{empState,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="languageId != null">
+                #{languageId,jdbcType=INTEGER},
+            </if>
+            <if test="basitId != null">
+                #{basitId,jdbcType=INTEGER},
+            </if>
+            <if test="fuelUnit != null">
+                #{fuelUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="speedUnit != null">
+                #{speedUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="longUnit != null">
+                #{longUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="mapType != null">
+                #{mapType,jdbcType=INTEGER},
+            </if>
+            <if test="token != null">
+                #{token,jdbcType=VARCHAR},
+            </if>
+            <if test="tokenCreateTime != null">
+                #{tokenCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="tokenValidityTime != null">
+                #{tokenValidityTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.webdemo.weapi.action.domain.Employee">
+        update wl_p_employee
+        <set>
+            <if test="operatorCode != null">
+                operator_code = #{operatorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="enterpriseId != null">
+                enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+            </if>
+            <if test="userName != null">
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="account != null">
+                account = #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="pwd != null">
+                pwd = #{pwd,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                position = #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="lastLoginTime != null">
+                last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastLoginIp != null">
+                last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+            </if>
+            <if test="empState != null">
+                emp_state = #{empState,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="languageId != null">
+                language_id = #{languageId,jdbcType=INTEGER},
+            </if>
+            <if test="basitId != null">
+                basit_id = #{basitId,jdbcType=INTEGER},
+            </if>
+            <if test="fuelUnit != null">
+                fuel_unit = #{fuelUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="speedUnit != null">
+                speed_unit = #{speedUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="longUnit != null">
+                long_unit = #{longUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="mapType != null">
+                map_type = #{mapType,jdbcType=INTEGER},
+            </if>
+            <if test="token != null">
+                token = #{token,jdbcType=VARCHAR},
+            </if>
+            <if test="tokenCreateTime != null">
+                token_create_time = #{tokenCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="tokenValidityTime != null">
+                token_validity_time = #{tokenValidityTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where emp_id = #{empId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.webdemo.weapi.action.domain.Employee">
+    update wl_p_employee
+    set operator_code = #{operatorCode,jdbcType=VARCHAR},
+      enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+      emp_state = #{empState,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      language_id = #{languageId,jdbcType=INTEGER},
+      basit_id = #{basitId,jdbcType=INTEGER},
+      fuel_unit = #{fuelUnit,jdbcType=VARCHAR},
+      speed_unit = #{speedUnit,jdbcType=VARCHAR},
+      long_unit = #{longUnit,jdbcType=VARCHAR},
+      map_type = #{mapType,jdbcType=INTEGER},
+      token = #{token,jdbcType=VARCHAR},
+      token_create_time = #{tokenCreateTime,jdbcType=TIMESTAMP},
+      token_validity_time = #{tokenValidityTime,jdbcType=TIMESTAMP}
+    where emp_id = #{empId,jdbcType=INTEGER}
+  </update>
+
+
+    <update id="updateUserToken" parameterType="com.webdemo.weapi.action.domain.Employee">
+
+        update wl_p_employee
+
+        <set>
+
+            <if test="token != null and token != ''">
+                token = #{token,jdbcType=VARCHAR},
+            </if>
+
+            <if test="tokenCreateTime != null">
+                token_create_time = #{tokenCreateTime,jdbcType=TIMESTAMP},
+            </if>
+
+            <if test="tokenValidityTime != null">
+                token_validity_time = #{tokenValidityTime,jdbcType=TIMESTAMP},
+            </if>
+
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+
+            <if test="position != null and position != ''">
+                position = #{position,jdbcType=VARCHAR},
+            </if>
+
+        </set>
+        where
+
+        account = #{account,jdbcType=VARCHAR}
+
+        <!--  AND
+            pwd = #{pwd,jdbcType=VARCHAR}
+        -->
+    </update>
+
+
+    <select id="checkToken" parameterType="string"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+
+        from wl_p_employee
+
+        where token = #{token,jdbcType=VARCHAR}
+    </select>
+
+
+    <update id="logout"
+            parameterType="com.webdemo.weapi.action.domain.Employee">
+
+		update wl_p_employee
+
+		set
+		token_validity_time = #{tokenValidityTime,jdbcType=TIMESTAMP},
+		update_time = #{updateTime,jdbcType=TIMESTAMP}
+
+		where token = #{token,jdbcType=VARCHAR}
+
+	</update>
+
+</mapper>

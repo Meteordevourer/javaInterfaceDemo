@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webdemo.weapi.action.dao.WlDeviceMapper">
+    <update id="updateByPrimaryKeySelective" parameterType="com.webdemo.weapi.action.domain.entity.UWlDevice">
+        update wl_b_device
+        <set>
+            <if test="deviceCode != null">
+                device_code = #{deviceCode,jdbcType=VARCHAR},
+            </if>
+            <if test="enterpriseId != null">
+                enterprise_id = #{enterpriseId,jdbcType=INTEGER},
+            </if>
+            <if test="operatorCode != null">
+                operator_code = #{operatorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="userCode != null">
+                user_code = #{userCode,jdbcType=VARCHAR},
+            </if>
+            <if test="vehicleCode != null">
+                vehicle_code = #{vehicleCode,jdbcType=VARCHAR},
+            </if>
+            <if test="factoryDate != null">
+                factory_date = #{factoryDate,jdbcType=DATE},
+            </if>
+            <if test="installDate != null">
+                install_date = #{installDate,jdbcType=DATE},
+            </if>
+            <if test="assetsCoding != null">
+                assets_coding = #{assetsCoding,jdbcType=VARCHAR},
+            </if>
+            <if test="assetsBarcode != null">
+                assets_barcode = #{assetsBarcode,jdbcType=VARCHAR},
+            </if>
+            <if test="simOperator != null">
+                sim_operator = #{simOperator,jdbcType=VARCHAR},
+            </if>
+            <if test="simCode != null">
+                sim_code = #{simCode,jdbcType=VARCHAR},
+            </if>
+            <if test="simValiddate != null">
+                sim_validdate = #{simValiddate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="serialCode != null">
+                serial_code = #{serialCode,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceModel != null">
+                device_model = #{deviceModel,jdbcType=VARCHAR},
+            </if>
+            <if test="deviceType != null">
+                device_type = #{deviceType,jdbcType=INTEGER},
+            </if>
+            <if test="bindstatus != null">
+                bindstatus = #{bindstatus,jdbcType=INTEGER},
+            </if>
+            <if test="macActiveTime != null">
+                mac_active_time = #{macActiveTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="version != null">
+                version = #{version,jdbcType=VARCHAR},
+            </if>
+            <if test="imsi != null">
+                imsi = #{imsi,jdbcType=VARCHAR},
+            </if>
+            <if test="validState != null">
+                valid_state = #{validState,jdbcType=INTEGER},
+            </if>
+            <if test="userBelongs != null">
+                user_belongs = #{userBelongs,jdbcType=VARCHAR},
+            </if>
+            <if test="iccid != null">
+                iccid = #{iccid,jdbcType=VARCHAR},
+            </if>
+            <if test="fuelCorrect != null">
+                fuel_correct = #{fuelCorrect,jdbcType=DECIMAL},
+            </if>
+            <if test="adaptationStatus != null">
+                adaptation_status = #{adaptationStatus,jdbcType=INTEGER},
+            </if>
+            <if test="desKey != null">
+                des_key = #{desKey,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="ssid != null">
+                ssid = #{ssid,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="bindingTime != null">
+                binding_time = #{bindingTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="softwareVersion != null">
+                software_version = #{softwareVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="hardwareVersion != null">
+                hardware_version = #{hardwareVersion,jdbcType=VARCHAR},
+            </if>
+            <if test="manufacturer != null">
+                manufacturer = #{manufacturer,jdbcType=VARCHAR},
+            </if>
+            <if test="loginStatus != null">
+                login_status = #{loginStatus,jdbcType=INTEGER},
+            </if>
+            <if test="modemSoftware != null">
+                modem_software = #{modemSoftware,jdbcType=VARCHAR},
+            </if>
+            <if test="modemHardware != null">
+                modem_hardware = #{modemHardware,jdbcType=VARCHAR},
+            </if>
+
+            <if test="mileage != null">
+                mileage = #{mileage,jdbcType=DECIMAL},
+            </if>
+            <if test="sumMileage != null">
+                sum_mileage = #{sumMileage,jdbcType=DECIMAL},
+            </if>
+            <if test="gpsState != null">
+                gps_state = #{gpsState,jdbcType=DECIMAL},
+            </if>
+
+        </set>
+        where device_id = #{deviceId,jdbcType=BIGINT}
+    </update>
+</mapper>

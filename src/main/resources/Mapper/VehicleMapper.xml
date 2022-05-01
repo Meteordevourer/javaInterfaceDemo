@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.webdemo.weapi.action.dao.VehicleMapper">
+
+	<select id="selectVehicleList" parameterType="map"
+		resultType="com.webdemo.weapi.action.domain.show.app.VehicleInfoShow">
+		select  
+			v.vehicle_number AS plateNumber,
+			v.device_code AS deviceId,
+			vs.online_state AS onlineState,
+			vs.acc AS acc,
+			v.vin AS VehicleIdentificationNumber,
+			vb.brand AS vehicleManufacturers,
+			vser.series AS series,
+			vm.type_name AS vehicleMode,
+			vm.year AS vehicleYear,
+			v.fuel_type AS powerType,
+			vm.fuel_volume AS fuelVolume,
+			vm.engine AS engineType,
+			v.color AS vehicleColor,
+			vm.displacement AS engineCapacity,
+			vm.emission_standards AS emissionStandards,
+			v.created_tm AS dateAdded
+			
+			from wl_ov_app_b_vehicle v
+			
+			INNER JOIN wl_ov_app_t_vehicle_state vs ON vs.device_code = v.device_code
+			LEFT JOIN wl_b_vehicle_brand vb ON vb.brand_id = v.brand_id
+			LEFT JOIN wl_b_vehicle_series vser ON vser.series_id = v.series_id
+			LEFT JOIN wl_b_vehicle_model vm ON vm.model_id = v.model_id
+			
+			WHERE 
+			
+			v.operator_code LIKE CONCAT(#{operatorCode},'%') 
+			
+			
+			<if test="item != null and item.size() > 0" >
+			
+			 	AND v.vehicle_number in (
+				<foreach collection="item" item="item" index="index" separator=",">
+					#{item,jdbcType=VARCHAR}
+				</foreach>
+				)
+			</if>
+			
+			<if test="orderBy != null and orderBy != ''">
+				ORDER BY ${orderBy} 
+			</if>
+			
+			<if test="orderBy != null and orderBy != '' and descOrAsc != null and descOrAsc != ''">
+				
+				<if test="descOrAsc == 'ASC' ">
+					ASC 
+				</if>
+				
+				<if test="descOrAsc == 'DESC' ">
+					 DESC 
+				</if>
+				
+			</if>
+			
+			LIMIT #{startRow} , #{endRow}	
+		
+	</select>
+	
+	
+	<select id="selectVehicleListCount" parameterType="map" resultType="java.lang.Long">
+		select  
+			
+			COUNT(*) 
+			
+			from wl_ov_app_b_vehicle v
+			
+			INNER JOIN wl_ov_app_t_vehicle_state vs ON vs.device_code = v.device_code
+			LEFT JOIN wl_b_vehicle_brand vb ON vb.brand_id = v.brand_id
+			LEFT JOIN wl_b_vehicle_series vser ON vser.series_id = v.series_id
+			LEFT JOIN wl_b_vehicle_model vm ON vm.model_id = v.model_id
+			
+			WHERE 
+			
+			v.operator_code LIKE CONCAT(#{operatorCode},'%') 
+			
+			<if test="item != null and item.size() > 0" >
+			 	AND v.vehicle_number in (
+				<foreach collection="item" item="item" index="index" separator=",">
+					#{item,jdbcType=VARCHAR}
+				</foreach>
+				)
+			</if>
+		
+	</select>
+	
+<!--	<select id="getAlarmTypeList" -->
+<!--		resultType="com.webdemo.weapi.action.domain.entity.WlAlarmType">-->
+<!--		-->
+<!--		select-->
+<!--		-->
+<!--			alarm_id AS alarmId,-->
+<!--			alarm_class AS alarmClass,-->
+<!--			alarm_type AS alarmType,-->
+<!--			alarm_name AS alarmName,-->
+<!--			alarm_name_en AS alarmNameEn-->
+<!--		-->
+<!--		from wl_b_alarm_type-->
+<!--		-->
+<!--	</select>-->
+	
+	<select id="selectVehicleIsExists" parameterType="map" resultType="java.lang.Long">
+	
+		SELECT 
+		
+			COUNT(1)
+			
+		FROM wl_ov_app_b_vehicle
+		
+		WHERE
+		
+			operator_code = #{operatorCode}
+			
+			AND ( vehicle_number = #{plateNumber} OR vin = #{vin} )
+			
+			AND vehicle_state != -9
+	</select>
+	
+	
+</mapper>
